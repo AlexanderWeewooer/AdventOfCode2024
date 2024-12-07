@@ -24,68 +24,44 @@ with open("input.txt",'r') as file:
 print(safe_reps)
 
 
-# PART 2 tolerance
+# PART 2 tolerance (my tolerance to PYTHON GODDAMNIT)
+# I found out I am stupid: I completely, We completely (I asked other students), Forgot the literal fundamental mechanich of this level.
+# I have to remove one element at the time and THEN CHECK.
 
-divided=list()
-safe_reps=0 #safe reports counter
-flag=0
+divided = list()
+safe_reps = 0  # safe reports counter
 
-with open("input.txt",'r') as file:
-
-    flag=0
-    #taking all the lines and divinding them
+with open("input.txt", 'r') as file:
     for line in file:
+        safe = False
         buffer = line.split()
-        divided = list(map(int, buffer))
-        
-        #all increasing --------------------------------
-        increasing = False 
-        count=0
-        while(  count in range(len(divided)-1)  ):
-            if(divided[count] <= divided[count+1]):
-                count+=1
-            else:
-                flag+=1
-                count+=1
+        buffer[0].replace("ï»¿",'')
+        print(buffer)
+        if buffer[0].isdigit():
+            divided = list(map(int, buffer))
 
-        #if one element is wrong it still works
-        if(flag>1):
-            increasing = False
-        else:
-            increasing = True
-        
-        #all decreasing -------------------------------
-        decreasing = False 
-        flag=0 #resetting flag for controls
-        count=0
-        while(  count in range(len(divided)-1)  ):
-            if(divided[count] >= divided[count+1]):
-                count+=1
-            else:
-                flag+=1
-                count+=1
+            increasing = all(divided[i] <= divided[i + 1] for i in range(len(divided) - 1)) #all increasing
+            decreasing = all(divided[i] >= divided[i + 1] for i in range(len(divided) - 1)) #all decreasing
 
-        #if one element is wrong it still works
-        if(flag>1):
-            decreasing = False
-        else:
-            decreasing = True
+            if increasing or decreasing:
+                safe = all(1 <= abs(divided[i] - divided[i + 1]) <= 3 for i in range(len(divided) - 1)) #within range
 
-        #between 1 and 3 ------------------------------------
-        count=0
-        if(increasing or decreasing):
-            safe = 0
-            while( count in range(len(divided)-1) ):
-                if(1 <= abs( divided[count] - divided[count+1] )<= 3 ): 
-                    count+=1
-                else:
-                    count+=1
-                    safe+=1
+            if safe:
+                safe_reps += 1
+                continue
 
-        if(safe<=1):
-            safe_reps+=1
-            print(divided)
-            print("+1")
+            #piece of code I wish I thought of three days ago
+            for i in range(len(divided)):
+                modified_report = divided[:i] + divided[i + 1:]
 
-#final print of the counter
-print(safe_reps)
+                modified_increasing = all(modified_report[j] <= modified_report[j + 1] for j in range(len(modified_report) - 1))
+                modified_decreasing = all(modified_report[j] >= modified_report[j + 1] for j in range(len(modified_report) - 1))
+                modified_distances = all(1 <= abs(modified_report[j] - modified_report[j + 1]) <= 3 for j in range(len(modified_report) - 1))
+
+                if (modified_increasing or modified_decreasing) and modified_distances:
+                    safe = True
+                    break
+            if safe:
+                safe_reps += 1
+
+print(f"Total safe reports: {safe_reps}")
