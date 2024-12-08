@@ -5,4 +5,6 @@ Which I deeply despise for unknown reasons.
 
 Day1: ok
 
-Day2: currently losing my sanity
+Day2: currently losing my sanity (finally did it)
+
+Day3: ok I was just tired, but then figured it out
