@@ -8,3 +8,5 @@ Day1: ok
 Day2: currently losing my sanity (finally did it)
 
 Day3: ok I was just tired, but then figured it out
+
+Day4: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
